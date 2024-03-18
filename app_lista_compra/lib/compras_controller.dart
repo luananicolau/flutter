@@ -19,7 +19,7 @@ class ListaComprasController extends ChangeNotifier {
         }
       }
       if (!adicionado) {
-        // Se o item não foi adicionado, então adiciona
+        // Se o item não foi adicionado então ele é adicionado
         _compras.add(Compra(nome.trim(), false));
         notifyListeners();
       } 

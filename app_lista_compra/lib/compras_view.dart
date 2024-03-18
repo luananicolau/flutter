@@ -77,7 +77,7 @@ class ListaComprasScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Lista de tarefas usando um Consumer do Provider para atualização automática
+          // Lista de tarefas usando um consumer do Provider para atualização automática
           Expanded(
             child: Consumer<ListaComprasController>(
               builder: (context, model, child) {
