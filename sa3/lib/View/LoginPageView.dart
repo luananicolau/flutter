@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sa2_correcao/View/ToDoListPageView.dart';
+import '/View/ToDoListPageView.dart';
 
 import '../Controller/BancoDados.dart';
 import '../Model/Usuario.dart';

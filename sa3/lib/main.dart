@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sa2_correcao/View/LoginPageView.dart';
+import '/View/LoginPageView.dart';
 
 void main() {
   runApp(MyApp());

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sa2_correcao/Model/Usuario.dart';
+import '/Model/Usuario.dart';
 
 import '../Controller/BancoDados.dart';
 
