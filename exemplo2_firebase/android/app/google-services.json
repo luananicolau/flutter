@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1060369044706",
+    "project_id": "teste-firebase-tarde-luana",
+    "storage_bucket": "teste-firebase-tarde-luana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060369044706:android:9f52b0fcb0025d5b537abb",
+        "android_client_info": {
+          "package_name": "br.com.luana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Q8mxgWRcdkSWX-c5SaFDL0D0w1iOVP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060369044706:android:fd737cd6ae5edf6d537abb",
+        "android_client_info": {
+          "package_name": "com.google.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Q8mxgWRcdkSWX-c5SaFDL0D0w1iOVP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
