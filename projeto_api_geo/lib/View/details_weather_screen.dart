@@ -1,59 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:projeto_api_geo/Controller/weather_controller.dart';
 
-class DetailsWeatherScreen extends StatefulWidget {
-  final String city;
-  const DetailsWeatherScreen({super.key, required this.city});
+class WeatherDetailsScreen extends StatefulWidget {
+  final String cityName;
+  const WeatherDetailsScreen({super.key, required this.cityName});
 
   @override
-  State<DetailsWeatherScreen> createState() => _DetailsWeatherScreenState();
+  State<WeatherDetailsScreen> createState() => _WeatherDetailsScreenState();
 }
 
-class _DetailsWeatherScreenState extends State<DetailsWeatherScreen> {
+class _WeatherDetailsScreenState extends State<WeatherDetailsScreen> {
   final WeatherController _controller = WeatherController();
 
   @override
+  void initState() {
+    _controller.getWeather(widget.cityName);
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Detalhes'),
+      appBar: AppBar(
+        title: Text(widget.cityName),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            const Text(
+              'Weather Details',
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+            const SizedBox(height: 20),
+          FutureBuilder(
+            future: _controller.getWeather(widget.cityName), 
+            builder: (context, snapshot){
+              if(_controller.weatherList.isEmpty){
+                return const Center(child: CircularProgressIndicator());
+              }else{
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(_controller.weatherList.last.name),
+                        //icon favorite
+                        IconButton(
+                          icon: const Icon(Icons.favorite_border_outlined),
+                          onPressed: (){
+                            // adicionar aos favoritos
+                          },
+                        ),
+                      ],
+                    ),
+                    Text(_controller.weatherList.last.description),
+                    Text((_controller.weatherList.last.temp-273).toStringAsFixed(2)),
+                    
+                  ],
+                );
+              }
+
+            })
+          ],
         ),
-        body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Center(
-                child: FutureBuilder(
-                    future: _controller.getWeatherbyCity(widget.city),
-                    builder: (context, snapshot) {
-                      if (_controller.weatherList.isEmpty) {
-                        return const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(),
-                          ],
-                        );
-                      } else {
-                        return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(_controller.weatherList.last.name),
-                                  //icon favorite
-                                  IconButton(
-                                    icon: const Icon(Icons.favorite),
-                                    onPressed: () {
-                                      //criar método para favoritar
-                                    },
-                                  )
-                                ],
-                              ),
-                              Text(_controller.weatherList.last.description),
-                              Text((_controller.weatherList.last.temp - 273)
-                                  .toStringAsFixed(2))
-                            ]);
-                      }
-                    }))));
+      ),
+    );
   }
 }

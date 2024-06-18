@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'package:projeto_api_geo/Controller/weather_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,13 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    // TODO: implement initState
+    _getWeather();
     super.initState();
   }
 
   Future<void> _getWeather() async {
     try {
-      Position position = await Geolocator.getCurrentPosition();
-      _controller.getWeatherbyLocation(position.latitude, position.longitude);
+      Position _position = await Geolocator.getCurrentPosition();
+      print(_position.latitude);
+      _controller.getWeatherbyLocation(_position.latitude, _position.longitude);
       setState(() {});
     } catch (e) {
       print(e);
@@ -32,38 +34,56 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Projeto API Geo'),
+        title: Text("Previsão do Tempo"),
       ),
-      body: Center(
-        child: Column(
+      body: Padding(
+        padding: EdgeInsets.all(12),
+        child: Center(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/favorites');
+                    },
+                    child: const Text("Favorites")),
+                const SizedBox(width: 20),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/search');
                     },
-                    child: const Text("Search")),
-                ElevatedButton(onPressed: () {}, child: const Text("Favoritos"))
+                    child: const Text("Localization"))
               ],
             ),
             const SizedBox(height: 20),
-            FutureBuilder(
-                future: _getWeather(),
-                builder: (context, snapshot) {
+            //construir a exibição do clima(geolocalização)
+            Builder(
+                builder: (context) {
                   if (_controller.weatherList.isEmpty) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Column(children: [
+                      const Text("Localização Não Encontrada"),
+                      IconButton(
+                        icon: const Icon(Icons.refresh),
+                        onPressed: () {
+                          _getWeather();
+                        },
+                      )
+                    ]);
                   } else {
                     return Column(
                       children: [
                         Text(_controller.weatherList.last.name),
-                        const SizedBox(height: 10),
+                        Text(_controller.weatherList.last.main),
                         Text(_controller.weatherList.last.description),
-                        const SizedBox(height: 10),
                         Text((_controller.weatherList.last.temp - 273)
-                            .toStringAsFixed(2)),
+                            .toString()),
+                        Text((_controller.weatherList.last.tempMax - 273)
+                            .toString()),
+                        Text((_controller.weatherList.last.tempMin - 273)
+                            .toString()),
                         IconButton(
                           icon: const Icon(Icons.refresh),
                           onPressed: () {
@@ -75,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 })
           ],
-        ),
+        )),
       ),
     );
   }
